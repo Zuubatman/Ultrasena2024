@@ -11,7 +11,7 @@ interface Bet {
     winner: boolean | undefined
 }
 
-export default function DialogCreateBet(props: {open : boolean, betsArr: Bet[], setLuckyNumbers:  React.Dispatch<React.SetStateAction<number[]>> , setDrawStarted: React.Dispatch<React.SetStateAction<boolean>>, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], setLuckyNumbers:  React.Dispatch<React.SetStateAction<number[]>> , setDrawStarted: React.Dispatch<React.SetStateAction<boolean>>, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
     const setDrawStarted = props.setDrawStarted
@@ -59,6 +59,12 @@ export default function DialogCreateBet(props: {open : boolean, betsArr: Bet[], 
             }
             luckyNumbers.push(n)
         }
+
+        betsArr.forEach(bet => {
+            if(!bet.winner){
+                bet.winner = false
+            }
+        })
 
         luckyNumbers.splice(luckyNumbers.length -1, 1)
 

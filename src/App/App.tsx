@@ -6,6 +6,7 @@ import DialogCreateBet from './Components/DialogCreateBet';
 import DialogListBets from './Components/DialogListBets'
 import DialogStartDraw from './Components/DialogStartDraw'
 import DialogResults from './Components/DialogResults'
+import DialogStartBetting from './Components/DialogStartBetting';
 
 interface Bet {
   id: number,
@@ -16,13 +17,15 @@ interface Bet {
 }
 
 function App() {
-  const [start, setStart] = useState<boolean>(false)
 
   const [openCreateBet , setOpenCreateBet] = useState<boolean>(false)
   const [openListBets , setOpenListBets] = useState<boolean>(false)
 
   const [openStartDraw, setOpenStartDraw] = useState<boolean>(false)
   const [drawStarted, setDrawStarted] = useState<boolean>(false)
+
+  const [openStartBetting, setOpenStartBetting] = useState<boolean>(false)
+  const [startBetting, setStartBetting] = useState<boolean>(false)
 
   const [openResults, setOpenResults] = useState<boolean>(false)
 
@@ -34,8 +37,8 @@ function App() {
   function handleMenuOption(option: number){
     switch(option){
       case 1: 
-        setStart(true)
-      break;
+        setOpenStartBetting(true)
+        break;
       case 2: 
         setOpenCreateBet(true)
         break;
@@ -67,6 +70,14 @@ function App() {
   const handleAddId = () => {
     let newId = id + 1
     setId(newId)
+  }
+
+  const resetInfo = () => {
+    setBetsArray([])
+    setId(1000)
+    setLuckyNumbers([])
+    setStartBetting(true)
+    setDrawStarted(false)
   }
   
   return (
@@ -100,6 +111,13 @@ function App() {
         luckyNumbers={luckyNumbers}
         >
         </DialogResults>
+        <DialogStartBetting
+         open={openStartBetting}
+         setOpen={setOpenStartBetting}
+         resetInfo={resetInfo}
+        >
+
+        </DialogStartBetting>
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
             <Typography  variant="h2" color="primary" align="center">
@@ -109,10 +127,10 @@ function App() {
           <Grid item container style={{width: '20%'}} direction = {'column'}>
             <Grid container direction = {'column'} gap = {2}>
             <Button variant='contained' onClick={()=> handleMenuOption(1)}>Iniciar</Button>
-            <Button variant='contained' disabled = {!start || drawStarted} onClick={()=> handleMenuOption(2)}>Registrar nova Aposta</Button>
-            <Button variant='contained' disabled = {!start || betsArray.length < 1} onClick={()=> handleMenuOption(3)}>Lista de Apostas</Button>
-            <Button variant='contained' disabled = {!start || drawStarted || betsArray.length < 1} onClick={()=> handleMenuOption(4)}>Finalizar apostas e executar o sorteio</Button>
-            <Button variant='contained' disabled = {!start || betsArray.length < 1 || !drawStarted} onClick={()=> handleMenuOption(5)}>Fim da apuração</Button>
+            <Button variant='contained' disabled = {!startBetting || drawStarted} onClick={()=> handleMenuOption(2)}>Registrar nova Aposta</Button>
+            <Button variant='contained' disabled = {!startBetting || betsArray.length < 1} onClick={()=> handleMenuOption(3)}>Lista de Apostas</Button>
+            <Button variant='contained' disabled = {!startBetting || drawStarted || betsArray.length < 1} onClick={()=> handleMenuOption(4)}>Finalizar apostas e executar o sorteio</Button>
+            <Button variant='contained' disabled = {!startBetting || betsArray.length < 1 || !drawStarted} onClick={()=> handleMenuOption(5)}>Fim da apuração</Button>
             </Grid>
           </Grid>
       </Grid>

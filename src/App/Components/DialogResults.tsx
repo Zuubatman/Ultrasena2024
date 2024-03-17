@@ -17,7 +17,7 @@ interface NumberInfo {
     quant: number
 }
 
-export default function DialogCreateBet(props: {open : boolean, betsArray: Bet[], luckyNumbers: number[], setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogResults(props: {open : boolean, betsArray: Bet[], luckyNumbers: number[], setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
     const betsArr = props.betsArray
@@ -148,7 +148,7 @@ export default function DialogCreateBet(props: {open : boolean, betsArray: Bet[]
                                                         )
                                                     })}
                                                 </TableCell>
-                                                <TableCell align="center" color={bet.winner ? bet.winner === true ? "green" : "red" : ''}>
+                                                <TableCell align="center">
                                                     {bet.winner ? bet.winner === true ? 'Vencedor' : 'Perdedor' : 'Pendente'}
                                                 </TableCell>
                                             </TableRow>

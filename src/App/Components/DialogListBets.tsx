@@ -12,7 +12,7 @@ interface Bet {
     winner: boolean | undefined
 }
 
-export default function DialogCreateBet(props: {open : boolean, betsArray: Bet[], setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogListBets(props: {open : boolean, betsArray: Bet[], setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
     const betsArr = props.betsArray
@@ -55,8 +55,8 @@ export default function DialogCreateBet(props: {open : boolean, betsArray: Bet[]
                                             )
                                         })}
                                     </TableCell>
-                                    <TableCell align="center" color={bet.winner ? bet.winner === true ? "green" : "red" : ''}>
-                                        {bet.winner === undefined ? 'Pendente' : bet.winner}
+                                    <TableCell align="center" >
+                                        {bet.winner !== undefined ? (bet.winner === true ? 'Vencedor' : 'Perdedor') : 'Pendente'}
                                     </TableCell>
                                 </TableRow>
                             )
