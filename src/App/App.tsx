@@ -97,42 +97,36 @@ function App() {
           setOpen = {setOpenCreateBet}
           addBet = {handleAddBet}
           addId = {handleAddId}
-        >
-        </DialogCreateBet>
+        />
         <DialogListBets 
           open ={openListBets} 
           setOpen={setOpenListBets}
           betsArray={betsArray}
-        >
-        </DialogListBets>
+        />
         <DialogStartDraw
           open ={openStartDraw} 
           setOpen={setOpenStartDraw}
           setDrawStarted = {setDrawStarted}
           betsArr={betsArray}
           setLuckyNumbers = {setLuckyNumbers}
-        >
-        </DialogStartDraw>
+        />
         <DialogResults
         open={openResults}
         setOpen={setOpenResults}
         betsArray={betsArray}
         luckyNumbers={luckyNumbers}
-        >
-        </DialogResults>
+        />
         <DialogStartBetting
          open={openStartBetting}
          setOpen={setOpenStartBetting}
          resetInfo={resetInfo}
-        >
-        </DialogStartBetting>
+        />
         <DialogPrize
           open={openPrize}
           setOpen={setOpenPrize}
           winnerBets ={winnerBets}
           rounds = {luckyNumbers.length -4}
-        >
-        </DialogPrize>
+        />
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
             <Typography  variant="h2" color="primary" align="center">
