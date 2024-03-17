@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import {  Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import {  Button, DialogActions, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 
 
 interface Bet {
@@ -190,7 +190,15 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
                     </>
                 }
             </Grid>
-            
+            <DialogActions  style={{padding: '20px'}}>
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => setOpen(false)}
+                >
+                    Fechar
+                </Button>
+            </DialogActions>
         </Dialog>
     )
 }

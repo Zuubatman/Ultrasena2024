@@ -1,7 +1,7 @@
 import React from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import {  Grid, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import {  Button, DialogActions, Grid, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 
 interface Bet {
@@ -23,7 +23,7 @@ export default function DialogListBets(props: {open : boolean, betsArray: Bet[],
             open={open}
             onClose={() => setOpen(false) }
             >
-            <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '500px'}}>
+            <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '600px'}}>
                 <DialogTitle align="center">Lista de Apostas</DialogTitle>
                 <Table>
                     <TableHead>
@@ -66,7 +66,15 @@ export default function DialogListBets(props: {open : boolean, betsArray: Bet[],
 
                 </Table>
             </Grid>
-            
+            <DialogActions  style={{padding: '20px'}}>
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => setOpen(false)}
+                >
+                    Fechar 
+                </Button>
+            </DialogActions>
         </Dialog>
     )
 }

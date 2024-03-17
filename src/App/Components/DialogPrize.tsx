@@ -54,7 +54,7 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
                                 )
                             })
                         }
-                        {`!Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
+                        {`! Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
                         multiplicando o seu prêmio de R$100.000,00 por ${multiplyer}! Totalizando ${100000 * multiplyer} reais.`}
                         
                     </Typography>

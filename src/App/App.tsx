@@ -8,6 +8,7 @@ import DialogStartDraw from './Components/DialogStartDraw'
 import DialogResults from './Components/DialogResults'
 import DialogStartBetting from './Components/DialogStartBetting';
 import DialogPrize from './Components/DialogPrize';
+import { Copyright } from '@mui/icons-material';
 
 interface Bet {
   id: number,
@@ -135,7 +136,7 @@ function App() {
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
             <Typography  variant="h2" color="primary" align="center">
-              UltraSena 2024
+             <strong>UltraSena 2024</strong>
             </Typography>
           </Grid>
           <Grid item container style={{width: '20%'}} direction = {'column'}>
@@ -148,6 +149,9 @@ function App() {
             <Button variant='contained' disabled = {!startBetting || winnerBets.length < 1 || !drawStarted} onClick={()=> handleMenuOption(6)}>Premiação</Button>
             </Grid>
           </Grid>
+          <Typography variant='subtitle2' align='center' alignItems={'center'}>
+            João Vitor Morandi Inc. <Copyright style={{height: '15px'}}></Copyright>
+          </Typography>
       </Grid>
   );
 }
