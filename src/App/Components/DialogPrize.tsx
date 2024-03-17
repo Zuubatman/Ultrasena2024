@@ -17,9 +17,9 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
     const winnerBets = props.winnerBets
     const rounds = props.rounds
 
-    const [multiplyer, setMultiplyer] = useState<number>(1)
+    const [multiplier, setMultiplyer] = useState<number>(1)
 
-    function calculateMultiplyer(){
+    function calculateMultiplier(){
         if(rounds === 1){
             setMultiplyer(25)
         }
@@ -35,8 +35,8 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
     }
 
     useEffect(()=> {
-        calculateMultiplyer()
-    },[multiplyer])
+        calculateMultiplier()
+    },[rounds])
 
     return ( 
         <Dialog 
@@ -55,7 +55,7 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
                             })
                         }
                         {`! Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
-                        multiplicando o seu prêmio de R$100.000,00 por ${multiplyer}! Totalizando ${100000 * multiplyer} reais.`}
+                        multiplicando o seu prêmio de R$100.000,00 por ${multiplier}! Totalizando ${100000 * multiplier} reais.`}
                         
                     </Typography>
             </Grid>
