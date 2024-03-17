@@ -104,9 +104,6 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
                 <Typography align="center">
                     Rodadas: {luckyNumbers.length - 4}
                 </Typography>
-                <Typography align="center">
-                    Quant. Apostas Vencedoras: {winnerBets.length}
-                </Typography>
                 {
                     winnerBets.length < 1 ? 
 
@@ -116,6 +113,9 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
 
                     :
                     <>
+                    <Typography align="center">
+                        Quant. Apostas Vencedoras: {winnerBets.length}
+                    </Typography>
                     <DialogTitle align="center">Vencedores:</DialogTitle>
                     <Table>
                         <TableHead>

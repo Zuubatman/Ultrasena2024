@@ -3,13 +3,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, DialogActions, Grid, Typography } from "@mui/material";
 
-interface Bet {
-    id: number,
-    name: string,
-    cpf: string,
-    numbers: (number | undefined) [],
-    winner: boolean | undefined
-}
 
 export default function DialogStartBetting(props: {open : boolean, resetInfo: () => void , setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open

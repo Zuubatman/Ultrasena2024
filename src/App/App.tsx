@@ -7,6 +7,7 @@ import DialogListBets from './Components/DialogListBets'
 import DialogStartDraw from './Components/DialogStartDraw'
 import DialogResults from './Components/DialogResults'
 import DialogStartBetting from './Components/DialogStartBetting';
+import DialogPrize from './Components/DialogPrize';
 
 interface Bet {
   id: number,
@@ -32,7 +33,11 @@ function App() {
   const [betsArray, setBetsArray] = useState<Bet[]>([])
   const [id, setId] = useState<number>(1000)
 
+  const [openPrize, setOpenPrize] = useState<boolean>(false)
+
   const [luckyNumbers, setLuckyNumbers] = useState<number[]>([])
+
+  const winnerBets: Bet[] = betsArray.filter(bets => bets.winner === true)
 
   function handleMenuOption(option: number){
     switch(option){
@@ -50,6 +55,9 @@ function App() {
         break;
       case 5: 
         setOpenResults(true)
+        break;
+      case 6: 
+        setOpenPrize(true)
         break;
   
       default:
@@ -116,8 +124,14 @@ function App() {
          setOpen={setOpenStartBetting}
          resetInfo={resetInfo}
         >
-
         </DialogStartBetting>
+        <DialogPrize
+          open={openPrize}
+          setOpen={setOpenPrize}
+          winnerBets ={winnerBets}
+          rounds = {luckyNumbers.length -4}
+        >
+        </DialogPrize>
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
             <Typography  variant="h2" color="primary" align="center">
@@ -131,6 +145,7 @@ function App() {
             <Button variant='contained' disabled = {!startBetting || betsArray.length < 1} onClick={()=> handleMenuOption(3)}>Lista de Apostas</Button>
             <Button variant='contained' disabled = {!startBetting || drawStarted || betsArray.length < 1} onClick={()=> handleMenuOption(4)}>Finalizar apostas e executar o sorteio</Button>
             <Button variant='contained' disabled = {!startBetting || betsArray.length < 1 || !drawStarted} onClick={()=> handleMenuOption(5)}>Fim da apuração</Button>
+            <Button variant='contained' disabled = {!startBetting || winnerBets.length < 1 || !drawStarted} onClick={()=> handleMenuOption(6)}>Premiação</Button>
             </Grid>
           </Grid>
       </Grid>
