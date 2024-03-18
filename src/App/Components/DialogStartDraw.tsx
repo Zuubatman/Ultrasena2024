@@ -19,7 +19,7 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
     const setLuckyNumbers = props.setLuckyNumbers
 
     function draw(){
-        let luckyNumbers = []
+        let luckyNumbers: number[] = []
         let winner = false
 
         let n1 = Math.floor(Math.random() * 50) + 1

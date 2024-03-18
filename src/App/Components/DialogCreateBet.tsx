@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button, DialogActions, Grid, InputAdornment, TextField } from "@mui/material";
+import { Button, DialogActions, Grid, InputAdornment, TextField, Tooltip, Typography } from "@mui/material";
 import { AccountCircle, Badge } from "@mui/icons-material";
 
 interface Bet {
@@ -29,13 +29,14 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
     const [n4 , setN4] = useState<number>()
     const [n5 , setN5] = useState<number>()
 
-    const [error, setError] = useState<boolean>(true)
+    const [invalidNumbers, setInvalidNubers] = useState<boolean>(false)
+    const [cpfError, setCpfError] = useState<boolean>(false)
 
     useEffect(()=>{
         let numbers = [n1,n2,n3,n4,n5]
-        setError(verifyBet(numbers))
+        setInvalidNubers(verifyBet(numbers))
         
-    },[n1,n2,n3,n4,n5, error])
+    },[n1,n2,n3,n4,n5])
 
     
     function verifyBet (numbers: (number | undefined)[]){
@@ -101,8 +102,25 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
         setN5(undefined)
         setCpf('')
         setName('')
-        setError(true)
     }
+
+    function verifyCpf(){
+        if(cpf !== undefined) {
+            let cpfArr = cpf.split('')
+            for(let i = 0; i < cpfArr.length; i++){
+                if(isNaN(Number(cpfArr[i])) || cpfArr.length > 11){
+                    setCpfError(true)
+                    break;
+                }  else {
+                    setCpfError(false)
+                } 
+            }
+        }
+    }
+
+    useEffect(()=>{
+        verifyCpf()
+    }, [cpf])
 
     return ( 
         <Dialog 
@@ -110,7 +128,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
             onClose={() => { handleClose()} }
             >
             <Grid container direction={'column'} justifyContent={'center'} gap ={3} style={{padding: '40px', width: '500px'}}>
-                <DialogTitle align="center">Fazer aposta</DialogTitle>
+                <DialogTitle align="center">Fazer Aposta</DialogTitle>
                     <TextField 
                     label="Nome"
                     placeholder="Nome"
@@ -134,7 +152,8 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                         placeholder="CPF"
                         variant="outlined"
                         required 
-                        error = {false}
+                        error = {cpfError}
+                        helperText = {cpfError && 'Insira o número de CPF corretamente.'}
                         InputProps={{
                             startAdornment: (
                             <InputAdornment position="start">
@@ -147,7 +166,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                         }}
                         >
                     </TextField>
-                    <DialogTitle align="center">Insira os números que deseja apostar:</DialogTitle>
+                    <DialogTitle align="center">Insira os números entre 1 e 50 que deseja apostar:</DialogTitle>
                     <Grid item xs ={1} container direction={'row'} gap = {1} justifyContent={'center'}>
                         <TextField 
                             variant="filled" 
@@ -160,7 +179,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                                     setN1(number);
                                 } else {
                                     setN1(-1)
-                                    setError(true)
                                 }
                             }}>
                         </TextField>
@@ -175,7 +193,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                                     setN2(number);
                                 } else {
                                     setN2(-1)
-                                    setError(true)
                                 }
                             }}>
                           </TextField>
@@ -190,7 +207,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                                     setN3(number);
                                 } else {
                                     setN3(-1)
-                                    setError(true)
                                 }
                             }}>
                           </TextField>
@@ -205,7 +221,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                                     setN4(number);
                                 } else {
                                     setN4(-1)
-                                    setError(true)
                                 }
                             }}>
                           </TextField>
@@ -220,7 +235,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                                     setN5(number);
                                 } else {
                                     setN5(-1)
-                                    setError(true)
                                 }
                             }}>
                           </TextField>
@@ -231,22 +245,35 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                     <Button 
                         size = 'small'
                         variant="contained"
-                        disabled = { cpf === '' || name === ''}
+                        disabled = { name === '' || cpfError ||  cpf.length < 11}
                         onClick = {() => surpresa()}
                         >
                         Surpresa
                     </Button>
                 </Grid>
                 <Grid>
-                    <Button 
+                     <Button 
                         size = 'small'
                         variant="contained"
-                        disabled = {error || cpf === '' || name === ''}
-                        onClick={()=>{ createBet() }}
+                        onClick={()=>{ handleClose() }}
                         >
-                        Apostar
+                        Voltar
                     </Button>
-                </Grid>
+                </Grid> 
+                    <Grid>
+                        <Tooltip title={invalidNumbers || cpf.length < 11 ||  name === '' ? 'Preencha todos os campos para continuar.' : ''}>
+                            <span>
+                                <Button 
+                                    size = 'small'
+                                    variant="contained"
+                                    disabled = {invalidNumbers || cpf === '' || name === '' || cpfError || cpf.length < 11}
+                                    onClick={()=>{ createBet() }}
+                                    >
+                                    Apostar
+                                </Button>
+                            </span>
+                        </Tooltip>
+                    </Grid>
             </DialogActions>
         </Dialog>
     )
