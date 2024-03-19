@@ -97,6 +97,7 @@ function App() {
           setOpen = {setOpenCreateBet}
           addBet = {handleAddBet}
           addId = {handleAddId}
+          betsArray={betsArray}
         />
         <DialogListBets 
           open ={openListBets} 
@@ -111,15 +112,15 @@ function App() {
           setLuckyNumbers = {setLuckyNumbers}
         />
         <DialogResults
-        open={openResults}
-        setOpen={setOpenResults}
-        betsArray={betsArray}
-        luckyNumbers={luckyNumbers}
+          open={openResults}
+          setOpen={setOpenResults}
+          betsArray={betsArray}
+          luckyNumbers={luckyNumbers}
         />
         <DialogStartBetting
-         open={openStartBetting}
-         setOpen={setOpenStartBetting}
-         resetInfo={resetInfo}
+          open={openStartBetting}
+          setOpen={setOpenStartBetting}
+          resetInfo={resetInfo}
         />
         <DialogPrize
           open={openPrize}
@@ -130,7 +131,7 @@ function App() {
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
             <Typography  variant="h2" color="primary" align="center">
-             <strong>UltraSena 2024</strong>
+              <strong>UltraSena 2024</strong>
             </Typography>
           </Grid>
           <Grid item container style={{width: '20%'}} direction = {'column'}>
@@ -147,7 +148,7 @@ function App() {
             João Vitor Morandi Inc. <Copyright style={{height: '15px'}}></Copyright>
           </Typography>
       </Grid>
-  );
+  )
 }
 
 

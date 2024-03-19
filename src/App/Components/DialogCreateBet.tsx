@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button, DialogActions, Grid, InputAdornment, TextField, Tooltip, Typography } from "@mui/material";
+import { Button, DialogActions, Grid, InputAdornment, TextField, Tooltip } from "@mui/material";
 import { AccountCircle, Badge } from "@mui/icons-material";
+import DialogRepeatedCpf from "./DialogRepeatedCpf";
 
 interface Bet {
     id: number,
@@ -13,12 +14,13 @@ interface Bet {
 }
 
 
-export default function DialogCreateBet(props: {open : boolean, addId: () => void,  addBet:  (newBet: Bet) => void , id: number , setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogCreateBet(props: {open : boolean, addId: () => void, betsArray:Bet[],  addBet:  (newBet: Bet) => void , id: number , setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const id = props.id
     const addBet = props.addBet
     const setOpen = props.setOpen
     const addId = props.addId
+    const betsArray = props.betsArray
     
     const [name, setName] = useState<string>('')
     const [cpf, setCpf] = useState<string>('')
@@ -29,14 +31,15 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
     const [n4 , setN4] = useState<number>()
     const [n5 , setN5] = useState<number>()
 
-    const [invalidNumbers, setInvalidNubers] = useState<boolean>(false)
+    const [invalidNumbers, setInvalidNumbers] = useState<boolean>(true)
     const [cpfError, setCpfError] = useState<boolean>(false)
 
+    const [repeatedCpf, setRepeatedCpf] = useState<boolean>(false)
     const [repeatedNumbers , setRepetedNumbers] = useState<(number | undefined)[]>([])
 
     useEffect(()=>{
         let numbers = [n1,n2,n3,n4,n5]
-        setInvalidNubers(verifyBet(numbers))
+        verifyInvalidNumbers(numbers)
         verifyRepeatedNumbers(numbers)
         
     },[n1,n2,n3,n4,n5])
@@ -53,59 +56,91 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
         return false
     }
 
-    function verifyBet (numbers: (number | undefined)[]){
+    function verifyInvalidNumbers (numbers: (number | undefined)[]){
         for(let i= 0 ; i < numbers.length; i++) {
             if(numbers[i] === -1 || numbers[i] === undefined){
-                return true
+                setInvalidNumbers(true)
+                break
             }
         }
-        setRepetedNumbers([])
+        setInvalidNumbers(false)
+    }
+    
+    function verifyDifferentNameSameCpf(){
+        let bet = betsArray.find(bet => bet.cpf === cpf)
+        if(bet && bet.name !== name){
+            setRepeatedCpf(true)
+            return true
+        }
+        setRepeatedCpf(false)
         return false
     }
+    
+    useEffect(()=>{
+        function verifyCpf(){
+            if(cpf !== undefined) {
+                let cpfArr = cpf.split('')
+                for(let i = 0; i < cpfArr.length; i++){
+                    if(isNaN(Number(cpfArr[i])) || cpfArr.length > 11){
+                        setCpfError(true)
+                        break;
+                    }  else {
+                        setCpfError(false)
+                    } 
+                }
+            }
+        }
+        verifyCpf()
+    }, [cpf])
 
     function surpresa(){
-        let randomNumbers = []
-
-        let n1 = Math.floor(Math.random() * 50) + 1
-        randomNumbers.push(n1)
-
-        for(let i = 1; i < 5 ; i++){
-            let n = Math.floor(Math.random() * 50) + 1
-            while(randomNumbers.includes(n)){
-                n = Math.floor(Math.random() * 50) + 1
+        let errorCpf = verifyDifferentNameSameCpf()
+        if(!errorCpf){
+            let randomNumbers = []
+    
+            let n1 = Math.floor(Math.random() * 50) + 1
+            randomNumbers.push(n1)
+    
+            for(let i = 1; i < 5 ; i++){
+                let n = Math.floor(Math.random() * 50) + 1
+                while(randomNumbers.includes(n)){
+                    n = Math.floor(Math.random() * 50) + 1
+                }
+                randomNumbers.push(n)
             }
-            randomNumbers.push(n)
+    
+            console.log(randomNumbers)
+    
+            let bet: Bet = {
+                id: id,
+                name: name,
+                cpf: cpf,
+                numbers: [randomNumbers[0],randomNumbers[1],randomNumbers[2],randomNumbers[3],randomNumbers[4]],
+                winner: undefined
+            }
+    
+            console.log(bet)
+    
+            addBet(bet)
+            addId()
+            handleClose()
         }
-
-        console.log(randomNumbers)
-
-        let bet: Bet = {
-            id: id,
-            name: name,
-            cpf: cpf,
-            numbers: [randomNumbers[0],randomNumbers[1],randomNumbers[2],randomNumbers[3],randomNumbers[4]],
-            winner: undefined
-        }
-
-        console.log(bet)
-
-        addBet(bet)
-        addId()
-        handleClose()
     }
 
     function createBet(){ 
-        let bet: Bet = {
-            id: id,
-            name: name,
-            cpf: cpf,
-            numbers: [n1,n2,n3,n4,n5],
-            winner: undefined
+        let errorCpf = verifyDifferentNameSameCpf()
+        if(!errorCpf){
+            let bet: Bet = {
+                id: id,
+                name: name,
+                cpf: cpf,
+                numbers: [n1,n2,n3,n4,n5],
+                winner: undefined
+            }
+            addBet(bet)
+            addId()
+            handleClose();
         }
-
-        addBet(bet)
-        addId()
-        handleClose();
     }
 
     function handleClose(){
@@ -118,36 +153,20 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
         setCpf('')
         setName('')
         setCpfError(false)
-        setInvalidNubers(false)
+        setInvalidNumbers(true)
+        setRepeatedCpf(false)
     }
 
-    function verifyCpf(){
-        if(cpf !== undefined) {
-            let cpfArr = cpf.split('')
-            for(let i = 0; i < cpfArr.length; i++){
-                if(isNaN(Number(cpfArr[i])) || cpfArr.length > 11){
-                    setCpfError(true)
-                    break;
-                }  else {
-                    setCpfError(false)
-                } 
-            }
-        }
-    }
-
-    useEffect(()=> {
-        console.log(repeatedNumbers)
-    }, [repeatedNumbers])
-
-    useEffect(()=>{
-        verifyCpf()
-    }, [cpf])
 
     return ( 
         <Dialog 
             open={open}
             onClose={() => { handleClose()} }
             >
+            <DialogRepeatedCpf 
+                open={repeatedCpf} 
+                setOpen={setRepeatedCpf}
+            />
             <Grid container direction={'column'} justifyContent={'center'} gap ={3} style={{padding: '40px', width: '500px'}}>
                 <DialogTitle align="center">Fazer Aposta</DialogTitle>
                     <TextField 

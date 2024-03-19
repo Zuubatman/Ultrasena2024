@@ -29,33 +29,6 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
     const sortedWinners = winnerBets.sort(sortWinners)
     const sortedNumbers = numbersInfo.sort(sortNumbers)
 
-    function mostBetNumbers (){
-        let betNumbers: (number|undefined)[] = []
-        let numberInfo: NumberInfo[] = []
-
-        betsArr.forEach(bet => {
-            bet.numbers.forEach(num => {
-                if(!betNumbers.includes(num)){
-                    betNumbers.push(num)
-
-                    let betNumber: NumberInfo = {
-                        number: num,
-                        quant: 1
-                    }
-
-                    numberInfo.push(betNumber)
-                } else {
-                    let betNumber = numberInfo.find(numberInfo => numberInfo.number === num)
-                    if(betNumber){
-                        betNumber.quant = betNumber.quant + 1
-                    }
-                }
-            })
-        })
-
-        setNumbersInfo(numberInfo)
-    }
-
     function sortWinners(bet1: Bet, bet2: Bet ){
         if(bet1.name > bet2.name){
             return 1
@@ -77,12 +50,34 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
     }
 
     useEffect(()=> {
+        function mostBetNumbers (){
+            let betNumbers: (number|undefined)[] = []
+            let numberInfo: NumberInfo[] = []
+    
+            betsArr.forEach(bet => {
+                bet.numbers.forEach(num => {
+                    if(!betNumbers.includes(num)){
+                        betNumbers.push(num)
+    
+                        let betNumber: NumberInfo = {
+                            number: num,
+                            quant: 1
+                        }
+    
+                        numberInfo.push(betNumber)
+                    } else {
+                        let betNumber = numberInfo.find(numberInfo => numberInfo.number === num)
+                        if(betNumber){
+                            betNumber.quant = betNumber.quant + 1
+                        }
+                    }
+                })
+            })
+    
+            setNumbersInfo(numberInfo)
+        }
         mostBetNumbers()
     },[luckyNumbers, betsArr])
-
-    useEffect(()=>{
-        console.log(sortedWinners)
-    }, [sortedWinners])
 
     return ( 
         <Dialog 

@@ -78,7 +78,7 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
             open={open}
             onClose={() => {setOpen(false) }}
             >
-            <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '500px'}}>
+            <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '450px'}}>
                 <DialogTitle align="center">Iniciar Sorteio</DialogTitle>
                     <Typography align="center">
                         Finalizar período de apostas e iniciar o sorteio.

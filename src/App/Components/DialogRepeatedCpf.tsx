@@ -4,16 +4,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button, DialogActions, Grid, Typography } from "@mui/material";
 
 
-export default function DialogStartBetting(props: {open : boolean, resetInfo: () => void , setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogRepeatedCpf(props: {open : boolean , setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
-    const resetInfo = props.resetInfo
-
-
-    function handleClose(){
-        resetInfo()
-        setOpen(false)
-    }
 
     return ( 
         <Dialog 
@@ -21,25 +14,18 @@ export default function DialogStartBetting(props: {open : boolean, resetInfo: ()
             onClose={() => {setOpen(false) }}
             >
             <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '450px'}}>
-                <DialogTitle align="center">Iniciar Rodada</DialogTitle>
+                <DialogTitle align="center">Erro ao cadastrar aposta</DialogTitle>
                     <Typography align="center">
-                        Iniciar nova rodada de apostas.
+                        Esse CPF já foi registrado no nome de outro usuário. Por favor insira o CPF correto.
                     </Typography>
             </Grid>
             <DialogActions  style={{padding: '20px'}}>
                 <Button
-                variant="contained"
-                size="small"
-                onClick={() => {setOpen(false)}}
-                >
-                Voltar
-                </Button>
-                <Button
                     variant="contained"
                     size="small"
-                    onClick={() => handleClose()}
+                    onClick={() => setOpen(false)}
                 >
-                    Confirmar
+                    Entendido
                 </Button>
             </DialogActions>
         </Dialog>
