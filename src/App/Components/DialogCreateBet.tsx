@@ -32,19 +32,26 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
     const [invalidNumbers, setInvalidNubers] = useState<boolean>(false)
     const [cpfError, setCpfError] = useState<boolean>(false)
 
+    const [repeatedNumbers , setRepetedNumbers] = useState<(number | undefined)[]>([])
+
     useEffect(()=>{
         let numbers = [n1,n2,n3,n4,n5]
         setInvalidNubers(verifyBet(numbers))
         
     },[n1,n2,n3,n4,n5])
 
-    
     function verifyBet (numbers: (number | undefined)[]){
         for(let i= 0 ; i < numbers.length; i++) {
+            let numberAux = numbers.filter(number => number === numbers[i])
+            if(numberAux.length > 1 ) {
+                setRepetedNumbers(numberAux)
+                return true
+            }
             if(numbers[i] === -1 || numbers[i] === undefined){
                 return true
             }
         }
+        setRepetedNumbers([])
         return false
     }
 
@@ -64,7 +71,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
 
         console.log(randomNumbers)
 
-         let bet: Bet = {
+        let bet: Bet = {
             id: id,
             name: name,
             cpf: cpf,
@@ -102,6 +109,8 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
         setN5(undefined)
         setCpf('')
         setName('')
+        setCpfError(false)
+        setInvalidNubers(false)
     }
 
     function verifyCpf(){
@@ -117,6 +126,10 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
             }
         }
     }
+
+    useEffect(()=> {
+        console.log(repeatedNumbers)
+    }, [repeatedNumbers])
 
     useEffect(()=>{
         verifyCpf()
@@ -153,7 +166,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                         variant="outlined"
                         required 
                         error = {cpfError}
-                        helperText = {cpfError && 'Insira o número de CPF corretamente.'}
+                        helperText = {cpfError ? 'Insira o número de CPF corretamente.' : ' '}
                         InputProps={{
                             startAdornment: (
                             <InputAdornment position="start">
@@ -172,7 +185,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             variant="filled" 
                             size ={'small'} 
                             style={{width: '50px'}}
-                            error= {n1 ? n1 < 0 || n1 > 50 ? true : false : false}
+                            error= {n1 ? n1 < 0 || n1 > 50 || repeatedNumbers.includes(n1) ? true : false : false}
                             onChange={(evt) => {
                                 let number = Number(evt.target.value)
                                 if(!isNaN(number) && number > 0 && number <= 50){
@@ -186,7 +199,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             variant="filled"
                             size ={'small'}
                             style={{width: '50px'}}
-                            error= {n2 ? n2 < 0 || n2 > 50 ? true : false : false}
+                            error= {n2 ? n2 < 0 || n2 > 50 || repeatedNumbers.includes(n2) ? true : false : false}
                             onChange={(evt) => {
                                 let number = Number(evt.target.value)
                                 if(!isNaN(number) && number > 0 && number <= 50){
@@ -200,7 +213,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             variant="filled"
                             size ={'small'}
                             style={{width: '50px'}}
-                            error= {n3 ? n3 < 0 || n3 > 50 ? true : false : false}
+                            error= {n3 ? n3 < 0 || n3 > 50 || repeatedNumbers.includes(n3) ? true : false : false}
                             onChange={(evt) => {
                                 let number = Number(evt.target.value)
                                 if(!isNaN(number) && number > 0 && number <= 50){
@@ -214,7 +227,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             variant="filled"
                             size ={'small'}
                             style={{width: '50px'}}
-                            error= {n4 ? n4 < 0 || n4 > 50 ? true : false : false}
+                            error= {n4 ? n4 < 0 || n4 > 50 || repeatedNumbers.includes(n4) ? true : false : false}
                             onChange={(evt) => {
                                 let number = Number(evt.target.value)
                                 if(!isNaN(number ) && number > 0 && number <= 50){
@@ -228,7 +241,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             variant="filled"
                             size ={'small'}
                             style={{width: '50px'}}
-                            error= {n5 ? n5 < 0 || n5 > 50 ? true : false : false}
+                            error= {n5 ? n5 < 0 || n5 > 50 || repeatedNumbers.includes(n5) ? true : false : false}
                             onChange={(evt) => {
                                 let number = Number(evt.target.value)
                                 if(!isNaN(number) && number > 0 && number <= 50){
@@ -261,12 +274,12 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                     </Button>
                 </Grid> 
                     <Grid>
-                        <Tooltip title={invalidNumbers || cpf.length < 11 ||  name === '' ? 'Preencha todos os campos para continuar.' : ''}>
+                        <Tooltip title={invalidNumbers || cpf.length < 11 || cpfError ||  name === '' ? 'Preencha todos os campos para continuar.' : ''}>
                             <span>
                                 <Button 
                                     size = 'small'
                                     variant="contained"
-                                    disabled = {invalidNumbers || cpf === '' || name === '' || cpfError || cpf.length < 11}
+                                    disabled = {invalidNumbers || name === '' || cpfError || cpf.length !== 11}
                                     onClick={()=>{ createBet() }}
                                     >
                                     Apostar

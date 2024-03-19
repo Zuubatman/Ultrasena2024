@@ -159,7 +159,8 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
 
                         </TableBody>
                     </Table>
-
+                    </>
+                    }
                     <DialogTitle align="center">Números Apostados:</DialogTitle>
                     <Table>
                         <TableHead>
@@ -184,11 +185,8 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
                                     })
                                 
                                 }
-
                         </TableBody>
                     </Table>
-                    </>
-                }
             </Grid>
             <DialogActions  style={{padding: '20px'}}>
                 <Button
