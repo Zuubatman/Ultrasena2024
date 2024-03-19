@@ -37,16 +37,24 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
     useEffect(()=>{
         let numbers = [n1,n2,n3,n4,n5]
         setInvalidNubers(verifyBet(numbers))
+        verifyRepeatedNumbers(numbers)
         
     },[n1,n2,n3,n4,n5])
 
-    function verifyBet (numbers: (number | undefined)[]){
+    function verifyRepeatedNumbers(numbers: (number | undefined)[]){
+        let repeatedNumbersAux: (number| undefined)[] = []
         for(let i= 0 ; i < numbers.length; i++) {
             let numberAux = numbers.filter(number => number === numbers[i])
             if(numberAux.length > 1 ) {
-                setRepetedNumbers(numberAux)
-                return true
+                repeatedNumbersAux.push(numberAux[0])
             }
+        }
+        setRepetedNumbers(repeatedNumbersAux)
+        return false
+    }
+
+    function verifyBet (numbers: (number | undefined)[]){
+        for(let i= 0 ; i < numbers.length; i++) {
             if(numbers[i] === -1 || numbers[i] === undefined){
                 return true
             }
