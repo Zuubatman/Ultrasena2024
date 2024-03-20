@@ -37,6 +37,8 @@ function App() {
 
   const [luckyNumbers, setLuckyNumbers] = useState<number[]>([])
 
+  const [claimedReward, setClaimedReward] = useState<boolean>(false)
+
   const winnerBets: Bet[] = betsArray.filter(bets => bets.winner === true)
 
   function handleMenuOption(option: number){
@@ -86,6 +88,7 @@ function App() {
     setLuckyNumbers([])
     setStartBetting(true)
     setDrawStarted(false)
+    setClaimedReward(false)
   }
   
   return (
@@ -126,6 +129,7 @@ function App() {
           setOpen={setOpenPrize}
           winnerBets ={winnerBets}
           rounds = {luckyNumbers.length -4}
+          setClaimedReward = {setClaimedReward}
         />
 
           <Grid item style={{width: '30%'}} justifyContent={'center'} alignItems={'center'}>
@@ -140,7 +144,7 @@ function App() {
             <Button variant='contained' disabled = {!startBetting || betsArray.length < 1} onClick={()=> handleMenuOption(3)}>Lista de Apostas</Button>
             <Button variant='contained' disabled = {!startBetting || drawStarted || betsArray.length < 1} onClick={()=> handleMenuOption(4)}>Finalizar apostas e executar o sorteio</Button>
             <Button variant='contained' disabled = {!startBetting || betsArray.length < 1 || !drawStarted} onClick={()=> handleMenuOption(5)}>Fim da apuração</Button>
-            <Button variant='contained' disabled = {!startBetting || winnerBets.length < 1 || !drawStarted} onClick={()=> handleMenuOption(6)}>Premiação</Button>
+            <Button variant='contained' disabled = {!startBetting || winnerBets.length < 1 || !drawStarted || claimedReward} onClick={()=> handleMenuOption(6)}>Premiação</Button>
             </Grid>
           </Grid>
           <Typography variant='subtitle2' align='center' alignItems={'center'}>

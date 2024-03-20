@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, DialogActions, Grid, Typography } from "@mui/material";
+import DialogRiskEverything from "./DialogRiskEverythingy";
 
 interface Bet {
     id: number,
@@ -11,13 +12,15 @@ interface Bet {
     winner: boolean | undefined
 }
 
-export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , rounds: number, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , setClaimedReward: React.Dispatch<React.SetStateAction<boolean>>, rounds:number, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
     const winnerBets = props.winnerBets
     const rounds = props.rounds
+    const setClaimdReward = props.setClaimedReward
 
     const [multiplier, setMultiplyer] = useState<number>(1)
+    const [openRiskAll, setOpenRiskAll] = useState<boolean>(false)
 
     function calculateMultiplier(){
         if(rounds === 1){
@@ -34,6 +37,11 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
         }
     }
 
+    function handleClose(){
+        setClaimdReward(true)
+        setOpen(false)
+    }
+
     useEffect(()=> {
         calculateMultiplier()
     },[rounds])
@@ -43,6 +51,12 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
             open={open}
             onClose={() => {setOpen(false) }}
             >
+            <DialogRiskEverything
+                open={openRiskAll}
+                setOpen={setOpenRiskAll}
+                money={100000 * multiplier}
+                setOpenPrize={handleClose}
+            />
             <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '500px'}}>
                 <DialogTitle align="center">Premiação</DialogTitle>
                     <Typography align="center">
@@ -55,7 +69,9 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
                             })
                         }
                         {`! Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
-                        multiplicando o seu prêmio de R$100.000,00 por ${multiplier}! Totalizando ${100000 * multiplier} reais.`}
+                        multiplicando o seu prêmio de R$100.000,00 por ${multiplier}! Totalizando ${100000 * multiplier} reais, mas
+                        você ainda pode quintuplicar o seu prêmio selecionando a opção Arriscar Tudo! 
+                        Mas cuidado! Depois se selecionar não há mais volta!`}
                         
                     </Typography>
             </Grid>
@@ -63,10 +79,18 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
                 <Button
                     variant="contained"
                     size="small"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {setOpenRiskAll(true)}}
                 >
-                    Confirmar
+                    Arriscar Tudo
                 </Button>
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => handleClose()}
+                >
+                    Aceitar Prêmio
+                </Button>
+                
             </DialogActions>
         </Dialog>
     )
