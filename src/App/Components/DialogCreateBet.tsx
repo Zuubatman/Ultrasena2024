@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Button, DialogActions, Grid, InputAdornment, TextField, Tooltip } from "@mui/material";
+import { Button, DialogActions, Grid, InputAdornment, TextField, Tooltip, Typography } from "@mui/material";
 import { AccountCircle, Badge } from "@mui/icons-material";
 import DialogRepeatedCpf from "./DialogRepeatedCpf";
 
@@ -166,7 +166,7 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                 open={repeatedCpf} 
                 setOpen={setRepeatedCpf}
             />
-            <Grid container direction={'column'} justifyContent={'center'} gap ={3} style={{padding: '40px', width: '500px'}}>
+            <Grid container direction={'column'} justifyContent={'center'} gap ={3} style={{padding: '30px', width: '500px'}}>
                 <DialogTitle align="center">Fazer Aposta</DialogTitle>
                     <TextField 
                     label="Nome Completo"
@@ -278,6 +278,12 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                             }}>
                           </TextField>
                     </Grid>
+            </Grid>
+            <Grid>
+                <Typography color={'red'} align="center">
+                    {(repeatedNumbers[0] !== undefined && repeatedNumbers.length > 1) 
+                    || n1 === -1 || n2 === -1 || n3 === -1 || n4 === -1 || n5 === -1 ? 'Número inválido' : " ‎ " }
+                </Typography>
             </Grid>
             <DialogActions style={{padding: '20px'}}>
                 <Grid container justifyContent={'flex-start'}>

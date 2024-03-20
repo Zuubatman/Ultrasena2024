@@ -33,7 +33,7 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
             luckyNumbers.push(n)
         }
         
-        luckyNumbers = [1,2,3,4,5]
+        luckyNumbers = [1,2,3,4,5,6,7]
         while(winner === false && luckyNumbers.length <= 30){
             // eslint-disable-next-line no-loop-func
             betsArr.forEach(bet => {

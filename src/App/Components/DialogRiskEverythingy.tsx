@@ -34,7 +34,7 @@ export default function DialogRiskEverything(props: {open : boolean, money: numb
                     <>
                     <Typography align="center">
                         Selecione um número de 1 a 5 para ser sorteado. Se escolher o número de sorte, 
-                        seu prêmio será quintuplicado. Porém, se errar perderá todo o prêmio.
+                        seu prêmio será quintuplicado. Porém, se errar perderá tudo.
                     </Typography>
                     <Grid item container justifyContent={'center'} style={{padding: '20px'}}>
                     <TextField 
@@ -66,7 +66,7 @@ export default function DialogRiskEverything(props: {open : boolean, money: numb
                         winner === true && 
                         <>
                          <Typography align="center">
-                                {`Parabéns! O Prêmio foi quintuplicado! Totalizando R$${money * 5}!`}
+                                {`Parabéns! O Prêmio foi quintuplicado! Totalizando ${money * 5} reais!`}
                         </Typography>
                         </>
                     }

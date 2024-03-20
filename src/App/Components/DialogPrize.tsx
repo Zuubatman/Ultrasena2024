@@ -12,10 +12,9 @@ interface Bet {
     winner: boolean | undefined
 }
 
-export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , setClaimedReward: React.Dispatch<React.SetStateAction<boolean>>, rounds:number, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
+export default function DialogPrize(props: {open : boolean, setClaimedReward: React.Dispatch<React.SetStateAction<boolean>>, rounds:number, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
-    const winnerBets = props.winnerBets
     const rounds = props.rounds
     const setClaimdReward = props.setClaimedReward
 

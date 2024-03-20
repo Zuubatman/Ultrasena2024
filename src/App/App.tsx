@@ -127,7 +127,6 @@ function App() {
         <DialogPrize
           open={openPrize}
           setOpen={setOpenPrize}
-          winnerBets ={winnerBets}
           rounds = {luckyNumbers.length -4}
           setClaimedReward = {setClaimedReward}
         />
