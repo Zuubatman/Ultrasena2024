@@ -16,7 +16,7 @@ export default function DialogRepeatedCpf(props: {open : boolean , setOpen: Reac
             <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '450px'}}>
                 <DialogTitle align="center">Erro ao cadastrar aposta</DialogTitle>
                     <Typography align="center">
-                        Esse CPF já foi registrado no nome de outro usuário. Por favor insira o CPF correto.
+                        Esse CPF foi registrado no nome de outro usuário. Por favor insira o CPF correto ou verifique a escrita de seu nome.
                     </Typography>
             </Grid>
             <DialogActions  style={{padding: '20px'}}>

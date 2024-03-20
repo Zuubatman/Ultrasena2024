@@ -19,7 +19,6 @@ interface Bet {
 }
 
 function App() {
-
   const [openCreateBet , setOpenCreateBet] = useState<boolean>(false)
   const [openListBets , setOpenListBets] = useState<boolean>(false)
 
