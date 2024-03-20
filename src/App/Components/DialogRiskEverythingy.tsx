@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button, DialogActions, Grid, TextField, Typography } from "@mui/material";
-
-interface Bet {
-    id: number,
-    name: string,
-    cpf: string,
-    numbers: (number | undefined) [],
-    winner: boolean | undefined
-}
 
 export default function DialogRiskEverything(props: {open : boolean, money: number, setOpen: React.Dispatch<React.SetStateAction<boolean>>, setOpenPrize: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
@@ -32,7 +24,6 @@ export default function DialogRiskEverything(props: {open : boolean, money: numb
         setWinner(false)
     }
 
-    
     return ( 
         <Dialog 
             open={open}

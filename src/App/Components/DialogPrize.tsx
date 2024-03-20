@@ -22,27 +22,26 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
     const [multiplier, setMultiplyer] = useState<number>(1)
     const [openRiskAll, setOpenRiskAll] = useState<boolean>(false)
 
-    function calculateMultiplier(){
-        if(rounds === 1){
-            setMultiplyer(25)
-        }
-        else if(rounds < 4){
-            setMultiplyer(10)
-        }
-        else if(rounds < 10){
-            setMultiplyer(5)
-        }
-        else if(rounds < 20){
-            setMultiplyer(2)
-        }
-    }
-
     function handleClose(){
         setClaimdReward(true)
         setOpen(false)
     }
 
     useEffect(()=> {
+        function calculateMultiplier(){
+            if(rounds === 1){
+                setMultiplyer(25)
+            }
+            else if(rounds < 4){
+                setMultiplyer(10)
+            }
+            else if(rounds < 10){
+                setMultiplyer(5)
+            }
+            else if(rounds < 20){
+                setMultiplyer(2)
+            }
+        }
         calculateMultiplier()
     },[rounds])
 
