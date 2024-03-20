@@ -59,18 +59,10 @@ export default function DialogPrize(props: {open : boolean, winnerBets: Bet[] , 
             <Grid container direction={'column'} justifyContent={'center'} gap ={1} style={{padding: '40px', width: '500px'}}>
                 <DialogTitle align="center">Premiação</DialogTitle>
                     <Typography align="center">
-                        Parabéns 
-                        {
-                            winnerBets.map(bet => {
-                                return (
-                                    ` ${bet.name} `
-                                )
-                            })
-                        }
-                        {`! Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
-                        multiplicando o seu prêmio de R$100.000,00 por ${multiplier}! Totalizando ${100000 * multiplier} reais, mas
-                        você ainda pode quintuplicar o seu prêmio selecionando a opção Arriscar Tudo! 
-                        Mas cuidado! Depois se selecionar não há mais volta!`}
+                        {`Parabéns! Os números vencedores em foram esolhidos em ${rounds} rodada(s), 
+                        multiplicando o prêmio de R$100.000,00 por ${multiplier}! Totalizando ${100000 * multiplier} reais, mas
+                        ainda é possível quintuplicar o seu prêmio selecionando a opção Arriscar Tudo! 
+                        Mas cuidado! Depois de selecionar não há mais volta!`}
                         
                     </Typography>
             </Grid>

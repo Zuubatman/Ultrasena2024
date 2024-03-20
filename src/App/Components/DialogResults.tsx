@@ -30,9 +30,9 @@ export default function DialogResults(props: {open : boolean, betsArray: Bet[], 
     const sortedNumbers = numbersInfo.sort(sortNumbers)
 
     function sortWinners(bet1: Bet, bet2: Bet ){
-        if(bet1.name > bet2.name){
+        if(bet1.name.toUpperCase().trim() > bet2.name.toUpperCase().trim()){
             return 1
-        } else if(bet2.name > bet1.name){
+        } else if(bet2.name.toUpperCase().trim() > bet1.name.toUpperCase().trim()){
             return -1
         } else {
             return 0 
