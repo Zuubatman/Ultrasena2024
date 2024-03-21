@@ -22,17 +22,22 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
         let luckyNumbers: number[] = []
         let winner = false
 
+        //Sorteia os 5 primeiros números
         let n1 = Math.floor(Math.random() * 50) + 1
         luckyNumbers.push(n1)
 
         for(let i = 1; i < 5 ; i++){
             let n = Math.floor(Math.random() * 50) + 1
+            //Caso um número sorteado aleatóriamente seja repetido 
+            //o sistema entrará em loop até que outro número
+            // seja sorteado e não seja repetido 
             while(luckyNumbers.includes(n)){
                 n = Math.floor(Math.random() * 50) + 1
             }
             luckyNumbers.push(n)
         }
 
+        //Verifica o vencedor
         while(winner === false && luckyNumbers.length <= 30){
             // eslint-disable-next-line no-loop-func
             betsArr.forEach(bet => {
@@ -43,6 +48,7 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
                         if(number === luckyNumber){
                             cont++
                         }
+                        //Se o contador chegar a 5 quer dizer que o apostador acertou os 5 números
                         if(cont === 5){
                             bet.winner = true
                             winner = true
@@ -65,6 +71,9 @@ export default function DialogStartDraw(props: {open : boolean, betsArr: Bet[], 
             }
         })
 
+        //Ao final é feito um splice pois o método acaba sorteando um número a mais
+        //no entanto, esse número não é levado em consideração para fazer a apuração
+        //pois não entrará no loop novamente
         luckyNumbers.splice(luckyNumbers.length -1, 1)
 
         setLuckyNumbers(luckyNumbers)
