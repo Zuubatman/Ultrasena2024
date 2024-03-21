@@ -9,14 +9,11 @@ export default function DialogRiskEverything(props: {open : boolean, money: numb
     const money = props.money
     const setOpenPrize = props.setOpenPrize
 
-
     const [n1 , setN1] = useState<number>()
     const [winner, setWinner] = useState<boolean| undefined>(undefined)
 
     function draw(){
         let number = Math.floor(Math.random() * 5) + 1
-        number = 5
-        console.log(number)
         if(n1 === number){
             setWinner(true)
             return 

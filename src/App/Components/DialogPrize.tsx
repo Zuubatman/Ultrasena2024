@@ -4,14 +4,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button, DialogActions, Grid, Typography } from "@mui/material";
 import DialogRiskEverything from "./DialogRiskEverythingy";
 
-interface Bet {
-    id: number,
-    name: string,
-    cpf: string,
-    numbers: (number | undefined) [],
-    winner: boolean | undefined
-}
-
 export default function DialogPrize(props: {open : boolean, setClaimedReward: React.Dispatch<React.SetStateAction<boolean>>, rounds:number, setOpen: React.Dispatch<React.SetStateAction<boolean>>}){
     const open = props.open
     const setOpen = props.setOpen
@@ -23,6 +15,7 @@ export default function DialogPrize(props: {open : boolean, setClaimedReward: Re
 
     function handleClose(){
         setClaimdReward(true)
+        setMultiplyer(1)
         setOpen(false)
     }
 
@@ -39,6 +32,9 @@ export default function DialogPrize(props: {open : boolean, setClaimedReward: Re
             }
             else if(rounds < 20){
                 setMultiplyer(2)
+            }
+            else {
+                setMultiplyer(1)
             }
         }
         calculateMultiplier()

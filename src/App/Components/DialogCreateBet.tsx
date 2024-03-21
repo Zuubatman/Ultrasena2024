@@ -91,8 +91,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
                 winner: undefined
             }
     
-            console.log(bet)
-    
             addBet(bet)
             addId()
             handleClose()
@@ -128,10 +126,6 @@ export default function DialogCreateBet(props: {open : boolean, addId: () => voi
         setInvalidNumbers(true)
         setRepeatedCpf(false)
     }
-
-    useEffect(()=>{
-        console.log(invalidNumbers)
-    },[invalidNumbers])
     
     useEffect(()=>{
         function verifyCpf(){

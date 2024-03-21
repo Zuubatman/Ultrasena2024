@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DialogCreateBet from './Components/DialogCreateBet';
 import DialogListBets from './Components/DialogListBets'
 import DialogStartDraw from './Components/DialogStartDraw'
@@ -67,11 +67,6 @@ function App() {
     }
   
   }
-
-  useEffect(() => {
-    console.log(betsArray)
-    console.log('luckyNuymbers' , luckyNumbers)
-  },[betsArray, luckyNumbers])
 
   const handleAddBet = (newBet: Bet) => {
     setBetsArray([...betsArray, newBet]);
